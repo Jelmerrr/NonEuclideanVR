@@ -7,8 +7,14 @@ public class PortalCameraController : MonoBehaviour
     public Transform player_cam;
     public Transform portal;
     public Transform otherPortal;
+    public Transform vrTransform;
 
     public bool neg;
+
+    private void Start()
+    {
+        this.gameObject.GetComponent<Camera>().fieldOfView = vrTransform.GetComponent<Camera>().fieldOfView;
+    }
 
     void LateUpdate()
     {
@@ -22,5 +28,6 @@ public class PortalCameraController : MonoBehaviour
         Quaternion portalRotDiff = Quaternion.AngleAxis(angularDiff, Vector3.up);
         Vector3 newCamDir = portalRotDiff * player_cam.forward;
         transform.rotation = Quaternion.LookRotation(newCamDir, Vector3.up);
+        transform.localRotation = vrTransform.localRotation;      
     }
 }
